@@ -3,7 +3,7 @@ import React from 'react'
 import { Stack } from 'expo-router'
 
 
-const RootLayout= () => {
+const AuthLayout= () => {
   return (
       <>
           <StatusBar value="auto"/>
@@ -13,17 +13,12 @@ const RootLayout= () => {
           headerTintColor: '#fff',
           headerShown: false,
       }}>
-              <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-              <Stack.Screen name="(dashboard)" options={{ headerShown: false }} />
-             
-              <Stack.Screen name="(edit)" options={{ headerShown: false }} />
-
-
+          
           </Stack>
       </>
   )
 }
 
-export default RootLayout
+export default AuthLayout
 
 const styles = StyleSheet.create({})

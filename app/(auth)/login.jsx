@@ -1,5 +1,8 @@
 import { Link } from 'expo-router';
-import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, Pressable } from 'react-native';
+import GoogleImage from '../../assets/images/Google-Symbol.png';
+import FacebookImage from '../../assets/images/facebook.png';
+import InstagramImage from '../../assets/images/Instagram_icon.png';
 
 const  loginScreen= ()=> {
   return (
@@ -23,24 +26,22 @@ const  loginScreen= ()=> {
               </TouchableOpacity>
 
                 <TouchableOpacity style={styles.loginBtn}>  
-                    <Text style={styles.loginText}>
-                        Login
-                  </Text>
+                    <Text style={styles.loginText}>Login</Text>
               </TouchableOpacity>
 
               <Text style={styles.signupText}>
-                  Don't have an account?<Link href={'/register'}> <Text style={styles.link}>Create Now</Text></Link>
+                  Dont have an account?<Link href={'/register'}> <Text style={styles.link}>Create Now</Text></Link>
               </Text>
 
               <View style={styles.socials}>
                   <Image style={styles.icon}
-                      source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg' }}
+                      source={GoogleImage}
                   />
                   <Image style={styles.icon}
-                      source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg' }}
+                      source={FacebookImage}
                   />
                   <Image style={styles.icon}
-                      source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png' }}
+                      source={InstagramImage}
                           />
               </View>
               </View>
@@ -116,9 +117,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   icon: {
-    width: 30,
-    height: 30,
+    width: 40,
+    height: 40,
   },
+  
+  
 
 
 })
