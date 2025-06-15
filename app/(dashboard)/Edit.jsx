@@ -1,17 +1,22 @@
+import { useRouter } from 'expo-router';
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native'
-import AntDesign from '@expo/vector-icons/AntDesign';
 import { LinearGradient } from 'expo-linear-gradient';
-import {  MaterialIcons } from '@expo/vector-icons';
+import {  MaterialIcons, AntDesign } from '@expo/vector-icons';
 import Swiper from 'react-native-swiper';
-
 import img1 from '../../assets/images/img1.jpg';
 import img2 from '../../assets/images/img2.jpg';
 import img3 from '../../assets/images/img3.jpg';
+// import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 
 
 const images = [img1, img2, img3];
 
+
+
 const Edit = () => {
+  const router=useRouter()
+  // const insets = useSafeAreaInsets()
     return (
       <View style={styles.container}>
         
@@ -42,10 +47,16 @@ const Edit = () => {
 
           <View style={{ flex: 1 }}>
 
-          </View>
+        </View>
+        
+        
 
-          <View  style={styles.newProjectWrapper}>
-          <TouchableOpacity >
+          
+        <TouchableOpacity
+          style={styles.newProjectWrapper}
+          activeOpacity={0.8}
+          onPress={()=> router.push('/(edit)/Import_screen')}
+        >
             <LinearGradient
               colors={['#6C63FF', '#D65DB1']}
               start={{ x: 0, y: 0 }}
@@ -56,7 +67,8 @@ const Edit = () => {
             <Text style={styles.newProjectText}> New Project</Text>
           </LinearGradient>
         </TouchableOpacity>
-          </View>
+        
+        
       
     </View>
 
@@ -70,6 +82,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     
+
     
   },
   header: {

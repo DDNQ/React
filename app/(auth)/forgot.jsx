@@ -1,5 +1,5 @@
 
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native';
 
 const  ForgotPasswordScreen= ()=> {
@@ -14,10 +14,14 @@ const  ForgotPasswordScreen= ()=> {
                   placeholderTextColor="#999"
               />
 
-                <TouchableOpacity style={styles.loginBtn}>  
-                  <Link href={'/verify'}><Text style={styles.loginText}>
+        <TouchableOpacity
+          style={styles.loginBtn}
+          activeOpacity={0.8}
+          onPress={()=> router.push('/(auth)/verify')}
+        >  
+                  <Text style={styles.loginText}>
                         Send OTP
-                  </Text></Link>
+                  </Text>
               </TouchableOpacity>
 
              

@@ -1,10 +1,16 @@
-import { View, Text } from 'react-native'
+import {  StatusBar } from 'react-native'
 import { Tabs } from 'expo-router'
 import { Ionicons } from '@expo/vector-icons'
-import  Entypo  from '@expo/vector-icons/Entypo';
+
+
 
 const DashboardLayout = () => {
     return (
+        <>
+            <StatusBar value="auto" />
+      
+          
+          
         <Tabs
             
             screenOptions={{
@@ -26,21 +32,24 @@ const DashboardLayout = () => {
                 name="Edit"
                 options={{
                     title: 'Edit',
-                    tabBarIcon: () => (
-                        <Entypo name="scissors" size={24} color="black"  />
+                    tabBarIcon: ({ focused }) => (
+                        <Ionicons
+                            name={focused ? "cut" : "cut-outline"}
+                            size={24}
+                            color="black" />
                     ),
                     
                 }}
             />
             <Tabs.Screen
-                name="Profile"
+                name="Settings"
                 options={{
-                    title: 'Profile',
+                    title: 'Settings',
     
                     tabBarIcon: ({focused}) => (
                         <Ionicons
                         size={24}
-                            name={focused ? "person" : "person-outline"}
+                            name={focused ? "settings" : "settings-outline"}
                             color={focused ? '#000' : '#rgba(0, 0, 0, 0.48)'} 
                             
                             />
@@ -49,6 +58,7 @@ const DashboardLayout = () => {
                 }}
             />
             </Tabs>
+            </>
 
           
    
