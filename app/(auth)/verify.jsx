@@ -50,7 +50,7 @@ const handleChange = (text, index) => {
 
                 <TouchableOpacity style={styles.loginBtn}>  
                     <Text style={styles.loginText}>
-                        Send OTP
+                        Verify
                   </Text>
               </TouchableOpacity>
 

@@ -1,20 +1,26 @@
 // app/(screens)/SelectVideosScreen.jsx
 
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, ActivityIndicator  } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import * as MediaLibrary from 'expo-media-library';
 import { Ionicons, Feather } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 
 
 
 const SelectVideosScreen = () => {
-    
+  const router = useRouter()
+  // const [selectedMedia, setSelectedMedia] = useState([]);
+  const [selectedVideos, setSelectedVideos] = useState([]);
+  const [selectedPhotos, setSelectedPhotos] = useState([]);
   const [hasPermission, setHasPermission] = useState(null);
-    const [videos, setVideos] = useState([]);
-    const [photos, setPhotos] = useState([]);
-    const [selectedIds, setSelectedIds] = useState([]);
-    const [activeTab, setActiveTab] = useState('Videos');
+  const [videos, setVideos] = useState([]);
+  const [photos, setPhotos] = useState([]);
+  const [selectedIds, setSelectedIds] = useState([]);
+  const [activeTab, setActiveTab] = useState('Videos');
   const [loading, setLoading] = useState(true);
+  const selectedCount = activeTab === 'Videos' ? selectedVideos.length : selectedPhotos.length;
+
 
   useEffect(() => {
     (async () => {
@@ -45,21 +51,37 @@ const SelectVideosScreen = () => {
   }, []);
 
   const toggleSelect = (id) => {
-    setSelectedIds((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
-    );
+    if (activeTab === 'Videos') {
+      setSelectedVideos((prev) =>
+        prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+      );
+    } else {
+      setSelectedPhotos((prev) =>
+        prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+      );
+    }
   };
 
   const renderItem = ({ item }) => {
-    const isSelected = selectedIds.includes(item.id);
+    const currentSelectedIds = activeTab === 'Videos' ? selectedVideos : selectedPhotos;
+    const isSelected = currentSelectedIds.includes(item.id);
+    const selectionIndex = currentSelectedIds.indexOf(item.id) + 1
+
     return (
       <TouchableOpacity
         style={[styles.thumbnailWrapper, isSelected && styles.selectedBorder]}
         onPress={() => toggleSelect(item.id)}
       >
         <Image source={{ uri: item.uri }} style={styles.thumbnail} />
+
+        {isSelected && (
+          <View style={styles.selectionNumber}>
+            <Text style={styles.selectionNumberText}>{selectionIndex}</Text>
+          </View>
+        )}
+
         {activeTab === 'Videos' && item.duration != null && (
-            <Text style={styles.duration}>{formatDuration(item.duration)}</Text>
+          <Text style={styles.duration}>{formatDuration(item.duration)}</Text>
         )}
       </TouchableOpacity>
     );
@@ -78,11 +100,11 @@ const SelectVideosScreen = () => {
   if (hasPermission === false) {
     return <View style={styles.center}><Text>No access to media library</Text></View>;
   }
-    
-    
 
-    return (
-      
+
+
+  return (
+
     <View style={styles.container}>
       {/* 
       <View style={[styles.header,{paddingTop:insets.top, paddingBottom:insets.bottom}]}>
@@ -119,15 +141,16 @@ const SelectVideosScreen = () => {
 
       {/* Footer */}
       <View style={styles.footer}>
-      <Text style={styles.footerText}>
+        <Text style={styles.footerText}>
           Select at least 1 {activeTab === 'Videos' ? 'Clip' : 'Photo'}
         </Text>
         <TouchableOpacity
+          onPress={() => router.push('/(edit)/MainEditScreen')}
           style={[
             styles.addButton,
-            { opacity: selectedIds.length === 0 ? 0.5 : 1 },
+            { opacity: selectedCount === 0 ? 0.5 : 1 },
           ]}
-          disabled={selectedIds.length === 0}
+          disabled={selectedCount === 0}
         >
           <Text style={styles.addButtonText}>Add</Text>
         </TouchableOpacity>
@@ -139,121 +162,108 @@ const SelectVideosScreen = () => {
 export default SelectVideosScreen
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-        backgroundColor: '#000',
-      
-    },
-    center: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    // header: {
-    //   flexDirection: 'row',
-    //     alignItems: 'center',
-    //     paddingVertical: 20,
-    //   paddingHorizontal:10,
-    //     padding: 16,
-    // //   justifyContent:''
-    //     justifyContent: 'flex-start',
-      
-    // },
-    // dropdown: {
-    //   flexDirection: 'row',
-    //   alignItems: 'center',
-    //   backgroundColor: '#111',
-    //   paddingHorizontal: 12,
-    //   paddingVertical: 8,
-    //     borderRadius: 6,
-    //     marginLeft:'10%'
-      
-    // },
-    // dropdownText: {
-    //   color: '#00e5ff',
-    //     marginRight: 1,
-      
-    // },
-    // libraryBtn: {
-    //     marginLeft:'25%',
-    //   color: '#fff',
-    //     fontWeight: '600',
-    // },
-    tabs: {
-      flexDirection: 'row',
-      justifyContent: 'space-around',
-      borderBottomColor: '#444',
-      borderBottomWidth: 1,
-        // paddingVertical: 10,
-        paddingVertical: 20,
-        paddingHorizontal:10,
-    },
-    tab: {
-      color: '#888',
-      fontSize: 16,
-    },
-    activeTab: {
-      color: '#00e5ff',
-      fontWeight: 'bold',
-      textDecorationLine: 'underline',
-    },
-    grid: {
-      paddingHorizontal: 5,
-      paddingBottom: 80,
-    },
-    thumbnailWrapper: {
-      width: '32%',
-      margin: '1%',
-      aspectRatio: 0.7,
-      position: 'relative',
-      borderRadius: 8,
-      overflow: 'hidden',
-    },
-    selectedBorder: {
-      borderWidth: 2,
-      borderColor: '#00e5ff',
-    },
-    thumbnail: {
-      width: '100%',
-      height: '100%',
-      borderRadius: 8,
-    },
-    duration: {
-      position: 'absolute',
-      bottom: 4,
-      right: 6,
-      backgroundColor: 'rgba(0,0,0,0.6)',
-      color: '#fff',
-      fontSize: 12,
-      paddingHorizontal: 4,
-      borderRadius: 4,
-    },
-    footer: {
-      position: 'absolute',
-      bottom: 0,
-      width: '100%',
-      paddingBottom:20,
-      flexDirection: 'row',
-      alignItems: 'center',
-      padding: 12,
-      justifyContent: 'space-between',
-      backgroundColor: '#111',
-    },
-    footerText: {
-      color: '#fff',
-        fontSize: 14,
-      marginLeft: 10
-    },
-    addButton: {
-      backgroundColor: '#9b00f0',
-      paddingHorizontal: 20,
-      paddingVertical: 8,
-        borderRadius: 20,
-      marginRight:5
-    },
-    addButtonText: {
-      color: '#fff',
-      fontWeight: '600',
-    },
-  });
-  
+  container: {
+    flex: 1,
+    backgroundColor: '#000',
+
+  },
+  center: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  tabs: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    borderBottomColor: '#444',
+    borderBottomWidth: 1,
+    // paddingVertical: 10,
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+  },
+  tab: {
+    color: '#888',
+    fontSize: 16,
+  },
+  activeTab: {
+    color: '#00e5ff',
+    fontWeight: 'bold',
+    textDecorationLine: 'underline',
+  },
+  grid: {
+    paddingHorizontal: 5,
+    paddingBottom: 80,
+  },
+  thumbnailWrapper: {
+    width: '32%',
+    margin: '1%',
+    aspectRatio: 0.7,
+    position: 'relative',
+    borderRadius: 8,
+    overflow: 'hidden',
+  },
+  selectedBorder: {
+    borderWidth: 2,
+    borderColor: '#00e5ff',
+  },
+  thumbnail: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 8,
+  },
+  duration: {
+    position: 'absolute',
+    bottom: 4,
+    right: 6,
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    color: '#fff',
+    fontSize: 12,
+    paddingHorizontal: 4,
+    borderRadius: 4,
+  },
+  footer: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    paddingBottom: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 12,
+    justifyContent: 'space-between',
+    backgroundColor: '#111',
+  },
+  footerText: {
+    color: '#fff',
+    fontSize: 14,
+    marginLeft: 10
+  },
+  addButton: {
+    backgroundColor: '#9b00f0',
+    paddingHorizontal: 20,
+    paddingVertical: 8,
+    borderRadius: 20,
+    marginRight: 5
+  },
+  addButtonText: {
+    color: '#fff',
+    fontWeight: '600',
+  },
+  selectionNumber: {
+    position: 'absolute',
+    top: 5,
+    right: 5,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    borderRadius: 10,
+    width: 20,
+    height: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 10,
+  },
+  selectionNumberText: {
+    color: 'white',
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+
+});

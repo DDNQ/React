@@ -1,32 +1,32 @@
 
-import { Link, router } from 'expo-router';
+import { router } from 'expo-router';
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native';
 
-const  ForgotPasswordScreen= ()=> {
+const ForgotPasswordScreen = () => {
   return (
-      <View style={styles.container}>
-          <View style= {styles.card}>
+    <View style={styles.container}>
+      <View style={styles.card}>
         <Text style={styles.title}>Enter your email</Text>
-        
 
-              <TextInput style={styles.input}
-                  placeholder="Email"
-                  placeholderTextColor="#999"
-              />
+
+        <TextInput style={styles.input}
+          placeholder="Email"
+          placeholderTextColor="#999"
+        />
 
         <TouchableOpacity
           style={styles.loginBtn}
           activeOpacity={0.8}
-          onPress={()=> router.push('/(auth)/verify')}
-        >  
-                  <Text style={styles.loginText}>
-                        Send OTP
-                  </Text>
-              </TouchableOpacity>
+          onPress={() => router.push('/(auth)/verify')}
+        >
+          <Text style={styles.loginText}>
+            Send OTP
+          </Text>
+        </TouchableOpacity>
 
-             
-              
-              </View>
+
+
+      </View>
     </View>
   )
 }
@@ -34,46 +34,46 @@ const  ForgotPasswordScreen= ()=> {
 export default ForgotPasswordScreen;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#000',
-        alignItems: 'center',
-        justifyContent: 'center'
-        
-    },
-    card: {
-        backgroundColor: '#fff',
-        padding: 30,
-        borderRadius: 16,
-        height: '100%',
-        width: '100%',
-       
-        alignItems: 'center',
-        justifyContent: 'center',   
-        
-    },
-    title: {
-        alignItems:'flex-start',
-        fontSize: 25,
-        fontWeight: '600',
-        marginBottom: 20,
-    },
-    input: {
-        width: '100%',
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 8,
-        padding: 12,
-        marginBottom: 20,
-        fontSize: 14,
-    },
-    forgot: {
-        color: 'red',
-        alignSelf: 'flex-end',
-        marginBottom: 20,
-      
-    },
-    loginBtn: {
+  container: {
+    flex: 1,
+    backgroundColor: '#000',
+    alignItems: 'center',
+    justifyContent: 'center'
+
+  },
+  card: {
+    backgroundColor: '#fff',
+    padding: 30,
+    borderRadius: 16,
+    height: '100%',
+    width: '100%',
+
+    alignItems: 'center',
+    justifyContent: 'center',
+
+  },
+  title: {
+    alignItems: 'flex-start',
+    fontSize: 25,
+    fontWeight: '600',
+    marginBottom: 20,
+  },
+  input: {
+    width: '100%',
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 20,
+    fontSize: 14,
+  },
+  forgot: {
+    color: 'red',
+    alignSelf: 'flex-end',
+    marginBottom: 20,
+
+  },
+  loginBtn: {
     width: '100%',
     paddingVertical: 14,
     borderRadius: 999,
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   },
   link: {
     fontWeight: '600',
-      color: '#000',
+    color: '#000',
   },
   socials: {
     flexDirection: 'row',

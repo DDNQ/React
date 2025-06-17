@@ -25,7 +25,7 @@ const  SignupScreen= ()=> {
 
                 <TouchableOpacity style={styles.loginBtn}>  
                     <Text style={styles.loginText}>
-                        Login
+                        Sign Up
                   </Text>
               </TouchableOpacity>
 
