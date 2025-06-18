@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, Feather } from '@expo/vector-icons';
+
 const screenWidth = Dimensions.get('window').width;
 
 
@@ -13,9 +14,9 @@ const MainEditScreen = () => {
     const allMedia = [...videos, ...photos];
     const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
     // const router = useRouter
-    useEffect(() => {
-        // You could auto-play video or prepare for editing here
-    }, []);
+    // useEffect(() => {
+    //     // You could auto-play video or prepare for editing here
+    // }, []);
     return (
         <View style={styles.container}>
             {/* Top bar */}
@@ -31,26 +32,43 @@ const MainEditScreen = () => {
             {/* Media Preview*/}
             <View style={styles.previewContainer}>
                 {allMedia.length > 0 && (
-                    <Image
-                        source={{ uri: allMedia[currentMediaIndex] }}
-                        style={styles.previewImage}
-                        resizeMode="cover"
-                    />
+                    <>
+                        <Image
+                            source={{ uri: allMedia[currentMediaIndex] }}
+                            style={styles.previewImage}
+                            resizeMode="cover"
+                        />
+                        <TouchableOpacity style={styles.playButton}>
+                            <Ionicons name="play" size={28} color="white" />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.fullscreenButton}>
+                            <Feather name="maximize" size={20} color="white" />
+                        </TouchableOpacity>
+                    </>
                 )}
             </View>
 
             {/* Timeline */}
-            <ScrollView horizontal style={styles.timeline} showsHorizontalScrollIndicator={false}>
-                {allMedia.map((uri, index) => (
-                    <TouchableOpacity
-                        key={index}
-                        onPress={() => setCurrentMediaIndex(index)}
-                        style={[styles.timelineItem, currentMediaIndex === index && styles.activeTimelineItem]}
-                    >
-                        <Image source={{ uri }} style={styles.timelineImage} />
+            <View style={styles.timelineWrapper}>
+                <Text style={styles.timelineLabel}>00:55 / 02:20</Text>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.timeline}>
+                    <TouchableOpacity style={styles.addMediaButton}>
+                        <Ionicons name="add" size={24} color="white" />
                     </TouchableOpacity>
-                ))}
-            </ScrollView>
+                    {allMedia.map((uri, index) => (
+                        <TouchableOpacity
+                            key={index}
+                            onPress={() => setCurrentMediaIndex(index)}
+                            style={[styles.timelineItem, currentMediaIndex === index && styles.activeTimelineItem]}
+                        >
+                            <Image source={{ uri }} style={styles.timelineImage} />
+                        </TouchableOpacity>
+                    ))}
+                </ScrollView>
+                <View style={styles.musicBar}>
+                    <Text style={{ color: '#aaa', fontSize: 12 }}>+ Add music</Text>
+                </View>
+            </View>
 
             {/* Toolbar */}
             <ScrollView horizontal style={styles.toolbar} showsHorizontalScrollIndicator={false}>
@@ -77,6 +95,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         padding: 16,
+        paddingTop: 50,
     },
     exportButton: {
         backgroundColor: '#00CFFF',
@@ -89,17 +108,53 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     previewContainer: {
-        flex: 3,
         justifyContent: 'center',
         alignItems: 'center',
+        position: 'relative',
+        height: screenWidth * 1.2,
     },
     previewImage: {
         width: screenWidth,
-        height: screenWidth * 1.2,
+        height: '100%',
+    },
+    playButton: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: [{ translateX: -14 }, { translateY: -14 }],
+        backgroundColor: '#00000080',
+        padding: 10,
+        borderRadius: 20,
+    },
+    fullscreenButton: {
+        position: 'absolute',
+        bottom: 10,
+        right: 10,
+        backgroundColor: '#00000080',
+        padding: 6,
+        borderRadius: 12,
+    },
+    timelineWrapper: {
+        paddingBottom: 10,
+    },
+    timelineLabel: {
+        paddingLeft: 10,
+        fontSize: 12,
+        color: '#fff',
     },
     timeline: {
-        backgroundColor: '#111',
-        paddingVertical: 10,
+        flexDirection: 'row',
+        paddingHorizontal: 10,
+        marginTop: 5,
+    },
+    addMediaButton: {
+        width: 60,
+        height: 60,
+        borderRadius: 6,
+        backgroundColor: '#444',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 8,
     },
     timelineItem: {
         marginHorizontal: 5,
@@ -115,17 +170,24 @@ const styles = StyleSheet.create({
         height: 60,
         borderRadius: 4,
     },
+    musicBar: {
+        marginTop: 6,
+        paddingLeft: 10,
+    },
     toolbar: {
-        padding: 10,
+        flexDirection: 'row',
         borderTopWidth: 1,
         borderTopColor: '#333',
+        paddingVertical: 10,
+        paddingHorizontal: 8,
         backgroundColor: '#111',
     },
     toolButton: {
-        marginHorizontal: 8,
+        marginHorizontal: 6,
         backgroundColor: '#222',
-        padding: 10,
-        borderRadius: 8,
+        paddingHorizontal: 14,
+        paddingVertical: 8,
+        borderRadius: 10,
     },
     toolText: {
         color: '#fff',

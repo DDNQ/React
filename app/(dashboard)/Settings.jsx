@@ -1,9 +1,11 @@
-import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView } from 'react-native'
-import {Feather, Ionicons, MaterialIcons} from '@expo/vector-icons'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { Feather, Ionicons, MaterialIcons } from '@expo/vector-icons'
+
+import { StatusBar } from 'expo-status-bar';
 
 
 const Settings = () => {
+
   const Row = ({ icon, label, onPress }) => (
     <>
       <TouchableOpacity style={styles.row}>
@@ -13,11 +15,13 @@ const Settings = () => {
       </TouchableOpacity>
       <View style={styles.divider} />
     </>
-    
+
   );
-  const insets= useSafeAreaInsets
+
   return (
-    <View style={[styles.container, {paddingTop: insets.top, paddingBottom: insets.bottom}]}>
+    <View style={[styles.container]}>
+      <StatusBar style="light" backgroundColor='#000' />
+
       {/* Header  */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Settings</Text>
@@ -50,8 +54,8 @@ const Settings = () => {
           label="Logout"
         />
 
-      </View>          
-          
+      </View>
+
     </View>
   )
 }
@@ -59,17 +63,19 @@ const Settings = () => {
 export default Settings
 
 const styles = StyleSheet.create({
-  container: {
-        flex: 1,
-    backgroundColor: '#fff',
-        
 
-        
-        
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+
+
+
+
   },
   header: {
     alignItems: 'center',
     paddingVertical: 16,
+    paddingTop: 70,
   },
   headerTitle: {
     fontSize: 30,
@@ -99,5 +105,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#e5e5e5',
     marginHorizontal: 15,
   },
-   
+
 })

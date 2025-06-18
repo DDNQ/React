@@ -16,7 +16,7 @@ const SelectVideosScreen = () => {
   const [hasPermission, setHasPermission] = useState(null);
   const [videos, setVideos] = useState([]);
   const [photos, setPhotos] = useState([]);
-  const [selectedIds, setSelectedIds] = useState([]);
+  // const [selectedIds, setSelectedIds] = useState([]);
   const [activeTab, setActiveTab] = useState('Videos');
   const [loading, setLoading] = useState(true);
   const selectedCount = activeTab === 'Videos' ? selectedVideos.length : selectedPhotos.length;
@@ -180,6 +180,7 @@ const styles = StyleSheet.create({
     // paddingVertical: 10,
     paddingVertical: 20,
     paddingHorizontal: 10,
+    paddingTop: 60,
   },
   tab: {
     color: '#888',

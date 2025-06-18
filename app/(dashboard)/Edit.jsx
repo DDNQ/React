@@ -1,11 +1,13 @@
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient';
-import {  MaterialIcons, AntDesign } from '@expo/vector-icons';
+import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import Swiper from 'react-native-swiper';
 import img1 from '../../assets/images/img1.jpg';
 import img2 from '../../assets/images/img2.jpg';
 import img3 from '../../assets/images/img3.jpg';
+import { StatusBar } from 'expo-status-bar';
 // import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 
@@ -15,64 +17,69 @@ const images = [img1, img2, img3];
 
 
 const Edit = () => {
-  const router=useRouter()
+  const router = useRouter()
+
+
   // const insets = useSafeAreaInsets()
-    return (
-      <View style={styles.container}>
-        
-        {/* Header Section */}
-        <View style={styles.header}>
-          <Swiper autoplay loop showsPagination={true} style={styles.swiper}>
-            {images.map((image, index) => (
-              <Image key={index} source={image} style={styles.bannerImage} />
-            ))}
-          </Swiper>
+  return (
+    <View style={[styles.container]}>
+      <StatusBar style="light" backgroundColor='#000' />
 
-          
 
-          <View style={styles.proBadge}>
-            <Text style={styles.proText}>PRO</Text>
-          </View>
 
-          <View style={styles.headerOverlay}>
-            <Text style={styles.headerText}>Professional Editor</Text>
-          </View>
-          </View>
-          
-          <View style={styles.projectsRow}>
-            <Text style={styles.projectsTitle}>Projects</Text>
-            <MaterialIcons name= "sort" size={24} color="black" />
-          </View>
-          
+      {/* Header Section */}
+      <View style={styles.header}>
+        <Swiper autoplay loop showsPagination={true} style={styles.swiper}>
+          {images.map((image, index) => (
+            <Image key={index} source={image} style={styles.bannerImage} />
+          ))}
+        </Swiper>
 
-          <View style={{ flex: 1 }}>
 
+
+        <View style={styles.proBadge}>
+          <Text style={styles.proText}>PRO</Text>
         </View>
-        
-        
 
-          
-        <TouchableOpacity
-          style={styles.newProjectWrapper}
-          activeOpacity={0.8}
-          onPress={()=> router.push('/(edit)/Import_screen')}
+        <View style={styles.headerOverlay}>
+          <Text style={styles.headerText}>Professional Editor</Text>
+        </View>
+      </View>
+
+      <View style={styles.projectsRow}>
+        <Text style={styles.projectsTitle}>Projects</Text>
+        <MaterialIcons name="sort" size={24} color="black" />
+      </View>
+
+
+      <View style={{ flex: 1 }}>
+
+      </View>
+
+
+
+
+      <TouchableOpacity
+        style={styles.newProjectWrapper}
+        activeOpacity={0.8}
+        onPress={() => router.push('/(edit)/Import_screen')}
+      >
+        <LinearGradient
+          colors={['#6C63FF', '#D65DB1']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={styles.newProjectButton}
         >
-            <LinearGradient
-              colors={['#6C63FF', '#D65DB1']}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-              style={styles.newProjectButton}
-            >
-              <AntDesign name="plussquare" size={24} color="white"/>
-            <Text style={styles.newProjectText}> New Project</Text>
-          </LinearGradient>
-        </TouchableOpacity>
-        
-        
-      
+          <AntDesign name="plussquare" size={24} color="white" />
+          <Text style={styles.newProjectText}> New Project</Text>
+        </LinearGradient>
+      </TouchableOpacity>
+
+
+
     </View>
 
-    )
+  )
 }
 
 export default Edit;
@@ -81,15 +88,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    
 
-    
+
+
   },
   header: {
     height: 400,
     position: 'relative',
   },
-  
+
   headerOverlay: {
     position: 'absolute',
     bottom: 15,
@@ -100,10 +107,10 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
   },
-  
+
   proBadge: {
     position: 'absolute',
-    top: 20,
+    top: 50,
     right: 14,
     backgroundColor: '#00C4FF',
     borderRadius: 10,
@@ -144,17 +151,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   swiper: {
-  height: '100%',
-  borderBottomLeftRadius: 24,
-  borderBottomRightRadius: 24,
-  
-},
-bannerImage: {
-  width: '100%',
-  height: '100%',
-  resizeMode: 'cover',
-  borderBottomLeftRadius: 3,
-  borderBottomRightRadius: 3,
-},
+    height: '100%',
+    borderBottomLeftRadius: 24,
+    borderBottomRightRadius: 24,
+
+  },
+  bannerImage: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+    borderBottomLeftRadius: 3,
+    borderBottomRightRadius: 3,
+  },
 
 });
